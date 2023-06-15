@@ -1,0 +1,249 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Lucasbleyder2010/-c-28/blob/main/C125\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "VjYtRw-_Jun7",
+        "outputId": "42cf5129-ade6-4b7e-ac3e-cc67183d9021"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Cloning into 'Pro-M3-Hurricane-Damage-Dataset'...\n",
+            "remote: Enumerating objects: 800, done.\u001b[K\n",
+            "remote: Total 800 (delta 0), reused 0 (delta 0), pack-reused 800\u001b[K\n",
+            "Receiving objects: 100% (800/800), 2.07 MiB | 11.58 MiB/s, done.\n"
+          ]
+        }
+      ],
+      "source": [
+        "!git clone https://github.com/ByjusBrazil/PRO_1-1_C125_HurricaneDamageDataset"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Exiba a imagem\n",
+        "from matplotlib import pyplot\n",
+        "from matplotlib.image import imread\n",
+        "\n",
+        "training_damaged_image = \"/content/PRO_1-1_C125_HurricaneDamageDataset/train/damage/image (1).jpeg\"\n",
+        "\n",
+        "# carregue os pixels da imagem\n",
+        "image = imread(training_damaged_image)\n",
+        "\n",
+        "pyplot.title(\"danificado: Imagem 1\")\n",
+        "\n",
+        "# plote os dados brutos de pixel\n",
+        "pyplot.imshow(image)\n",
+        "\n",
+        "# mostre a figura\n",
+        "pyplot.show()"
+      ],
+      "metadata": {
+        "id": "YbVbrJp7J4rn"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Rotação de processamento de imagem (a atividade do aluno começa aqui)\n",
+        "import tensorflow\n",
+        "from tensorflow.keras.preprocessing.image import ImageDataGenerator\n",
+        "\n",
+        "# Rotação aleatória usando ImageDataGenerator\n",
+        "training_data_generator = ImageDataGenerator(rotation_range=90, fill_mode='nearest')\n",
+        "\n",
+        "# Diretório de imagens\n",
+        "training_image_directory = \"/content/PRO_1-1_C125_HurricaneDamageDataset/train\"\n",
+        "\n",
+        "# Gere arquivos de imagem rotacionados aleatoriamente\n",
+        "training_augmented_images = training_data_generator.flow_from_directory(training_image_directory,target_size=(180,180))"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "CCF_T0v7J_O3",
+        "outputId": "e8e1d2f0-6ebd-403c-b91c-a4415ad262a3"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Found 300 images belonging to 2 classes.\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Visualize imagens pré-processadas\n",
+        "from matplotlib import pyplot\n",
+        "from matplotlib.image import imread\n",
+        "\n",
+        "for i in range(4):\n",
+        "\n",
+        "\t# Defina uma subimagem\n",
+        "\tpyplot.subplot(2, 2, i+1)\n",
+        "\n",
+        "\t# Gere um lote de imagens\n",
+        "\tbatch = training_augmented_images.next()\n",
+        "\n",
+        "\t# Converter em inteiros sem sinal para visualização\n",
+        "\timage = batch[0][0].astype('uint8')\n",
+        "\n",
+        "\t# Plote dados brutos de pixel\n",
+        "\tpyplot.imshow(image)\n",
+        "\n",
+        "# Plote a figura principal (com 4 subfiguras)\n",
+        "pyplot.show()"
+      ],
+      "metadata": {
+        "id": "lliD04dIKHza",
+        "outputId": "d6d9d630-d17f-4b90-bdab-d2310101b4ec",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 452
+        }
+      },
+      "execution_count": 1,
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "NameError",
+          "evalue": "ignored",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mNameError\u001b[0m                                 Traceback (most recent call last)",
+            "\u001b[0;32m<ipython-input-1-f67a4e1fe217>\u001b[0m in \u001b[0;36m<cell line: 5>\u001b[0;34m()\u001b[0m\n\u001b[1;32m      9\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     10\u001b[0m         \u001b[0;31m# Gere um lote de imagens\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m---> 11\u001b[0;31m         \u001b[0mbatch\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mtraining_augmented_images\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mnext\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m     12\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m     13\u001b[0m         \u001b[0;31m# Converter em inteiros sem sinal para visualização\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mNameError\u001b[0m: name 'training_augmented_images' is not defined"
+          ]
+        },
+        {
+          "output_type": "display_data",
+          "data": {
+            "text/plain": [
+              "<Figure size 640x480 with 1 Axes>"
+            ],
+            "image/png": "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\n"
+          },
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#zoom e inversão horizontal\n",
+        "\n",
+        "import tensorflow\n",
+        "from tensorflow.keras.preprocessing.image import ImageDataGenerator\n",
+        "\n",
+        "# Aumento aleatório de dados (Redimensionamento, Deslocamento, Rotação) usando ImageDataGenerator\n",
+        "training_data_generator = ImageDataGenerator(zoom_range=0.3,\n",
+        "                                             horizontal_flip=True,\n",
+        "                                             fill_mode='nearest')\n",
+        "\n",
+        "# Diretório de Imagens\n",
+        "training_image_directory = \"/content/PRO_1-1_C125_HurricaneDamageDataset/train\"\n",
+        "\n",
+        "# Gere arquivos de imagem aumentada\n",
+        "training_augmented_images = training_data_generator.flow_from_directory(\n",
+        "                                                       training_image_directory,\n",
+        "                                                       target_size=(180,180))"
+      ],
+      "metadata": {
+        "id": "o2szhwU4KUmt"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Visualize imagens pré-processadas\n",
+        "from matplotlib import pyplot\n",
+        "from matplotlib.image import imread\n",
+        "\n",
+        "for i in range(4):\n",
+        "\n",
+        "\t# Defina uma subimagem\n",
+        "\tpyplot.subplot(2, 2, i+1)\n",
+        "\n",
+        "\t# Gere um lote de imagens\n",
+        "\tbatch = training_augmented_images.next()\n",
+        "\n",
+        "\t# Converter em inteiros sem sinal para visualização\n",
+        "\timage = batch[0][0].astype('uint8')\n",
+        "\n",
+        "\t# Plote dados brutos de pixel\n",
+        "\tpyplot.imshow(image)\n",
+        "\n",
+        "# Plote a figura principal (com 4 subfiguras)\n",
+        "pyplot.show()"
+      ],
+      "metadata": {
+        "id": "SuuNY1lPKZkd"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Aumento aleatório de dados (Redimensionamento, Rotação, Inversões, Zoom, Deslocamentos) usando ImageDataGenerator\n",
+        "training_data_generator = ImageDataGenerator(\n",
+        "    rescale = 1.0/255,\n",
+        "    rotation_range=40,\n",
+        "    width_shift_range=0.3,\n",
+        "    height_shift_range=0.3,\n",
+        "    zoom_range=0.3,\n",
+        "    horizontal_flip=True,\n",
+        "    vertical_flip=True,\n",
+        "    fill_mode='nearest')"
+      ],
+      "metadata": {
+        "id": "RCCY0--8K0LW"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
